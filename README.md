@@ -2,12 +2,18 @@
 
 A small mobile web app (PWA) for your skincare shelf.
 
-- **Add products** with a photo, brand, type and notes.
+- **Add products from photos**: pick one or many photos and Claude reads each label, filling in the name, brand, type and when to use it. Products Claude isn't sure about are marked *Check details*.
 - **Routines build themselves**: morning and evening steps in the right layering order (cleanser → toner → serums → moisturizer → SPF).
 - **Evening actives rotate**: retinoid, exfoliating acids and masks go on the nights you pick, and never on the same night.
 - **Daily checklist** with progress for each routine.
 - **Reminders**: phone notifications at your morning/evening times, plus a calendar file (.ics) with daily alarms that ring even when the app is closed.
 - Works offline. Data stays on your phone (Backup / Restore in Reminders tab).
+
+## AI photo reading
+
+- Opened from Claude (the artifact link), photos are read with your Claude account. Claude asks you to allow it the first time.
+- Installed on your phone, add a Claude API key from [console.anthropic.com](https://console.anthropic.com) in **Reminders → AI photo reading**. The key stays on your phone and is sent only to Anthropic.
+- With no AI, photos are still saved and you type the details yourself.
 
 ## Put it on your phone
 
