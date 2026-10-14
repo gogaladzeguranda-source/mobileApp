@@ -20,6 +20,6 @@ A small mobile web app (PWA) for your skincare shelf.
 1. In GitHub: **Settings → Pages → Deploy from a branch → `master` / root → Save**.
 2. Open `https://<your-username>.github.io/mobileApp/` on your phone.
 3. **iPhone**: Safari → Share → *Add to Home Screen*. **Android**: Chrome → ⋮ → *Install app*.
-4. Open the app → **Reminders** → turn on notifications, and tap **Add to my calendar** for alarms that always ring.
+4. Open the app → **Reminders**. On iPhone, set up two daily reminders in the Reminders app (steps shown in the app). iOS doesn't let web apps send notifications while closed.
 
 No build step: it's plain `index.html`, `sw.js` and `manifest.webmanifest`.

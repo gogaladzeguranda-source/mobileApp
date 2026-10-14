@@ -281,6 +281,7 @@ const CATS = {
   lip:         { label: "Lip care",            order: 95, am: true,  pm: true,  hint: "" },
   other:       { label: "Other",               order: 65, am: true,  pm: true,  hint: "" },
 };
+const IS_IOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
 const DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
 const DEFAULTS = {
@@ -547,7 +548,7 @@ function renderSettings() {
       </div>
       <div class="toggle">
         <div><div style="font-weight:600">Notifications on this phone</div>
-        <div class="small muted">${perm === "denied" ? "Blocked. Allow notifications for this site in your browser settings." : perm === "unsupported" ? "This browser can't show notifications. Use the calendar reminders below." : "Shows a reminder at these times while the app is open or running in the background."}</div></div>
+        <div class="small muted">${perm === "denied" ? "Blocked. Allow notifications for this site in your browser settings." : perm === "unsupported" ? "This browser can't show notifications. Use the calendar reminders below." : IS_IOS ? "On iPhone this works only while the app is open. Set up the daily reminders below too." : "Shows a reminder at these times while the app is open or running in the background."}</div></div>
         <input type="checkbox" id="remind" ${s.remind && perm === "granted" ? "checked" : ""} ${perm === "unsupported" || perm === "denied" ? "disabled" : ""}>
       </div>
       <button class="btn ghost small" data-act="test" style="align-self:flex-start">Send a test reminder</button>
@@ -555,8 +556,17 @@ function renderSettings() {
 
     <section class="card">
       <div><h3>Reminders that always ring</h3>
-      <p class="small muted" style="margin:4px 0 0">Phones pause web apps when they're closed. For reminders that fire every day no matter what, add two repeating events with alarms to your phone's calendar.</p></div>
-      <button class="btn accent" data-act="ics" style="align-self:flex-start">Add to my calendar (.ics)</button>
+      <p class="small muted" style="margin:4px 0 0">${IS_IOS
+        ? "iPhone doesn't let web apps send scheduled notifications while they're closed. Use the iPhone's own Reminders app, which takes a minute to set up:"
+        : "Phones pause web apps when they're closed. For reminders that fire every day no matter what, add two repeating events with alarms to your phone's calendar."}</p></div>
+      ${IS_IOS ? `<ol class="small" style="margin:0;padding-left:20px;display:flex;flex-direction:column;gap:4px">
+        <li>Open the <b>Reminders</b> app and tap <b>New Reminder</b>.</li>
+        <li>Type <b>Morning skincare</b>, tap <b>Details</b>, turn on <b>Date</b> and <b>Time</b>, set <b>${fmtTime(s.amTime)}</b>.</li>
+        <li>Set <b>Repeat</b> to <b>Daily</b> and tap <b>Done</b>.</li>
+        <li>Do the same for <b>Evening skincare</b> at <b>${fmtTime(s.pmTime)}</b>.</li>
+      </ol>
+      <p class="small muted" style="margin:0">Or use your calendar instead:</p>` : ""}
+      <button class="btn ${IS_IOS ? "ghost" : "accent"}" data-act="ics" style="align-self:flex-start">Add to my calendar (.ics)</button>
       <div id="icsOut"></div>
     </section>
 
@@ -1003,6 +1013,7 @@ function doImport() {
 if ("serviceWorker" in navigator && location.protocol.startsWith("http")) {
   navigator.serviceWorker.register("sw.js").then(r => (swReg = r)).catch(() => {});
 }
+try { navigator.storage?.persist?.(); } catch { /* not supported */ }
 render();
 detectAi().then(() => { if (tab !== "today") render(); });
 if (firstRun) save();
