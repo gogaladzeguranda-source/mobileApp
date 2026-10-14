@@ -1,0 +1,19 @@
+# Glow Routine
+
+A small mobile web app (PWA) for your skincare shelf.
+
+- **Add products** with a photo, brand, type and notes.
+- **Routines build themselves**: morning and evening steps in the right layering order (cleanser → toner → serums → moisturizer → SPF).
+- **Evening actives rotate**: retinoid, exfoliating acids and masks go on the nights you pick, and never on the same night.
+- **Daily checklist** with progress for each routine.
+- **Reminders**: phone notifications at your morning/evening times, plus a calendar file (.ics) with daily alarms that ring even when the app is closed.
+- Works offline. Data stays on your phone (Backup / Restore in Reminders tab).
+
+## Put it on your phone
+
+1. In GitHub: **Settings → Pages → Deploy from a branch → `master` / root → Save**.
+2. Open `https://<your-username>.github.io/mobileApp/` on your phone.
+3. **iPhone**: Safari → Share → *Add to Home Screen*. **Android**: Chrome → ⋮ → *Install app*.
+4. Open the app → **Reminders** → turn on notifications, and tap **Add to my calendar** for alarms that always ring.
+
+No build step: it's plain `index.html`, `sw.js` and `manifest.webmanifest`.
